@@ -80,13 +80,16 @@ class UserController extends Controller
 
         $user = $request->user();
 
-        $folder = 'photos/profil';
+        $folder = storage_path('app/public/profil');
 
-        if($user->profil_picture && Storage::disk('public')->exists($folder . '/' . $user->profil_picture)) {
-            Storage::disk('public')->delete($user->profil_picture);
+        if(File::exists($folder)) {
+            File::cleanDirectory($folder);
+        }
+        else {
+            File::makeDirectory($folder, 0755, true);
         }
 
-        $path = $request->file('photo')->store($folder, 'public');
+        $path = $request->file('photo')->store('profil', 'public');
 
         $user->profile_photo = $path;
         $user->save();

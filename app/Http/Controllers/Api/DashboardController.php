@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -24,5 +26,27 @@ class DashboardController extends Controller
         }
 
         return response()->json(['categories' => $categories, 'galleries' => $albums, 'photos' => $photoCount]);
+    }
+
+    public function setPhoto(Request $request) {
+        $request->validate([
+            'photo' => 'required|image|max:5120'
+        ]);
+
+        $folder = storage_path('app/public/home');
+
+        if(File::exists($folder)) {
+            File::cleanDirectory($folder);
+        }
+        else {
+            File::makeDirectory($folder, 0755, true);
+        }
+
+        $path = $request->file('photo')->store('home', 'public');
+
+        return response()->json([
+            'message' => 'Picture profil updated',
+            'url' => asset('storage/' . $path)
+        ]);
     }
 }
