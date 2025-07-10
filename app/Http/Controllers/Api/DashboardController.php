@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Social;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -48,5 +49,21 @@ class DashboardController extends Controller
             'message' => 'Picture profil updated',
             'url' => asset('storage/' . $path)
         ]);
+    }
+
+    function setSocial(Request $request) {
+        $social = Social::create([
+            'name' => $request->name,
+            'url' => $request->url
+        ]);
+
+        return response()->json($social, 201);
+    }
+
+    function removeSocial($id) {
+        $social = Social::findOrFail($id);
+        $social->delete();
+
+        return response()->json(['success' => true]);
     }
 }
