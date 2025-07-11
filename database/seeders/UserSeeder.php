@@ -14,9 +14,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // User::create([
+        //     'name' => 'Admin',
+        //     'email' => 'admin@bulle-visuelle.be',
+        //     'password' => Hash::make('password'),
+        //     'profile_photo' => null,
+        // ]);
         User::create([
-            'name' => 'Admin',
-            'email' => 'admin@bulle-visuelle.be',
+            'name' => 'Enau',
+            'email' => 'enau@bulle-visuelle.be',
             'password' => Hash::make('password'),
             'profile_photo' => null,
         ]);
