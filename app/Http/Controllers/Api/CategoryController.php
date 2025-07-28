@@ -123,7 +123,7 @@ class CategoryController extends Controller
                 
                 if(!$img) continue;
     
-                $logoPath = public_path('storage\logo\signature_bulle-visuelle.png');
+                $logoPath = public_path('storage/logo/signature_bulle-visuelle.png');
                 $logo = imagecreatefrompng($logoPath);
                 imagesavealpha($logo, true);
     
